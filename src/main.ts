@@ -1,3 +1,4 @@
+import { error } from 'console';
 import { Api } from './components/base/Api';
 import { Communication } from './components/communication/Communication';
 import { Basket } from './components/models/Basket';
@@ -19,9 +20,9 @@ const basketModel = new Basket(basketItems);
 console.log('Товары в корзине:', basketModel.getBasket());
 basketModel.setProductItem(apiProducts.items[1]);
 console.log('Товары в корзине с добавленным товаром:', basketModel.getBasket());
-console.log(basketModel.getTotalPrise());
-console.log(basketModel.getProductCounter());
-console.log(basketModel.inBasket(apiProducts.items[3].id));
+console.log('Общая сумма заказа: ',basketModel.getTotalPrise());
+console.log('Количесво товаров в корзине: ', basketModel.getProductCounter());
+console.log('Наличие товара в корзине: ',basketModel.inBasket(apiProducts.items[3].id));
 basketModel.deleteProductItem(apiProducts.items[1].id);
 console.log('Корзина без удаленного товара:', basketModel.getBasket());
 basketModel.clearBasket();
@@ -36,17 +37,22 @@ buyerModel.email = 'Artemic@mail.ru';
 console.log('Контактная информация: ', buyerModel.getOrder());
 buyerModel.clearOrder();
 console.log('Контактная информация после очистки: ', buyerModel.getOrder());
-console.log('Валидация полей Адресной формы :' , buyerModel.validateForm('addressForm'));
+console.log('Валидация полей Адресной формы после сброса значений :' , buyerModel.validateForm('addressForm'));
 buyerModel.email = 'Artemka@mail.ru';
+console.log('Контактная информация после заполнения поля email: ', buyerModel.getOrder());
 console.log('Валидация полей Контактной формы:' , buyerModel.validateForm('contactsForm'));
 buyerModel.phone = '+79885675401';
-console.log('Валидация полей Контактной формы при указании всех полей:' , buyerModel.validateForm('contactsForm'));
+console.log('Контактная информация после заполнения поля phone: ', buyerModel.getOrder());
+console.log('Валидация полей Контактной формы при указании всех ее полей:' , buyerModel.validateForm('contactsForm'));
 
 const communicationModel = new Communication(new Api(API_URL), productsModel, basketModel);
 communicationModel.getApi()
 .then(()=>{
   console.log('Массив товаров полученного с сервера', productsModel.getProducts());
-});
+})
+.catch((error)=>{
+  console.log('Ошибка получения товаров с сервера', error);
+})
 buyerModel.address = 'Носовихенское шоссе, 4';
 basketModel.setProductItem(apiProducts.items[1]);
 communicationModel.postApi(buyerModel.getOrder());
