@@ -1,3 +1,5 @@
+import { CDN_URL } from "../../utils/constants";
+
 /**
  * Базовый компонент
  */
@@ -11,11 +13,20 @@ export abstract class Component<T> {
     // Установить изображение с альтернативным текстом
     protected setImage(element: HTMLImageElement, src: string, alt?: string) {
         if (element) {
-            element.src = src;
+            element.src = CDN_URL + src;
             if (alt) {
                 element.alt = alt;
             }
         }
+    }
+    protected setText(element: HTMLElement, text: string) {
+        if(element) {
+            element.textContent = text;
+        }
+    }
+
+    protected setDisable(element: HTMLElement, state: boolean) {
+        element.toggleAttribute('disabled', state);
     }
 
     // Вернуть корневой DOM-элемент

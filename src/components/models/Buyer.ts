@@ -1,5 +1,6 @@
 import { TPayment } from "../../types";
 import { IBuyer } from "../../types";
+import { IEvents } from "../base/Events";
 
 export class Buyer {
   protected _payment: TPayment;
@@ -7,7 +8,7 @@ export class Buyer {
   protected _phone: string;
   protected _email: string;
 
-  constructor(payment: TPayment = 'card', address: string = "", phone: string = "", email: string = ""){
+  constructor(payment: TPayment = 'card', address: string = "", phone: string = "", email: string = "", protected events: IEvents){
     this._payment = payment;
     this._address = address;
     this._phone = phone;
@@ -16,17 +17,22 @@ export class Buyer {
 
   set payment(value: TPayment) {
     this._payment = value;
+    this.events.emit('order:changed');
+
   }
   set address(value: string) {
     this._address = value;
+    this.events.emit('order:changed');
   }
 
   set phone(value: string) {
     this._phone = value;
+    this.events.emit('order:changed');
   }
 
   set email(value: string) {
     this._email = value;
+    this.events.emit('order:changed');
   }
 
   getOrder(): IBuyer{
