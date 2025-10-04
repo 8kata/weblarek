@@ -20,7 +20,6 @@ export class Success extends Component<{total: number}> {
   }
 
   render(data?: {total: number}): HTMLElement {
-    if (data?.total) this.total = data.total;
-    return this.container;
+    return super.render(data);
   }
 }

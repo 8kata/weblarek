@@ -35,9 +35,6 @@ export class CardCatalog extends Card {
   }
 
   render(data?: Partial<IProduct>): HTMLElement {
-    super.render(data);
-    if (data?.category) this.category = data.category;
-    if (data?.image) this.image = data.image;
-    return this.container
+    return super.render(data);
   }
 }

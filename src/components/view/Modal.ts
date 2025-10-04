@@ -34,9 +34,6 @@ export class Modal extends Component<TModal> {
   }
 
   render(data?: TModal): HTMLElement {
-    if (data?.content) {
-      this.content = data.content;
-    }
-    return this.container;
+    return super.render(data);
   }
 }

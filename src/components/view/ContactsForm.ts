@@ -32,9 +32,6 @@ export class ContactsForm extends Form {
   }
 
   render(data?: TOrder): HTMLElement {
-    super.render(data);
-    if (data?.email) this.email = data.email;
-    if (data?.phone) this.phone = data.phone;
-    return this.container
+    return super.render(data);
   }
 }

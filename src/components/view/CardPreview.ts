@@ -42,19 +42,19 @@ export class CardPreview extends Card {
   }
 
   set inBasket(value: boolean) {
-    this.setText(this._button, value ? `Удалить из корзины` : `Купить`)
+    if (this._price.textContent === 'Бесценно') return;
+    this.setText(this._button, value ? `Удалить из корзины` : `Купить`);
+  }
+
+  set price(value: number | null) {
+    super.price = value;
+    if (value === null) {
+      this.setText(this._button, 'Недоступно');
+      this.setDisable(this._button, true);
+    }
   }
 
   render(data?: Partial<IProduct & {inBasket?: boolean}>): HTMLElement {
-    super.render(data);
-    if (data?.category) this.category = data.category;
-    if (data?.image) this.image = data.image;
-    if (data?.description) this.description = data.description;
-    if (data?.inBasket) this.inBasket = data.inBasket;
-    if (data?.price === null) {
-      this.setText(this._button, 'Недоступно');
-      this.setDisable(this._button, true); 
-    }
-    return this.container
+    return super.render(data);
   }
 }

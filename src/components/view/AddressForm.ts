@@ -38,9 +38,6 @@ export class AddressForm extends Form {
   }
 
   render(data?: TOrder): HTMLElement {
-    super.render(data);
-    if (data?.payment) this.payment = data.payment;
-    if (data?.address) this.address = data.address;
-    return this.container
+    return super.render(data);
   }
 }

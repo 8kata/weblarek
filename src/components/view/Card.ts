@@ -29,9 +29,7 @@ export class Card extends Component<IProduct> {
   }
 
   render(data?: Partial<IProduct>): HTMLElement {
-    if (data?.title) this.title = data.title;
-    if (data?.price !== undefined) this.price = data.price;
-    return this.container;
+    return super.render(data);
   }
 }
 

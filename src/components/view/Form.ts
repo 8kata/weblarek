@@ -24,8 +24,6 @@ export class Form extends Component<TOrder> {
   }
 
   render(data?: TOrder) {
-    if(data?.valid !== undefined) this.valid = data.valid;
-    if(data?.error !== undefined) this.error = data.error;
-    return this.container
+    return super.render(data);
   }
 }

@@ -29,7 +29,6 @@ const contactsFormContainer = ensureElement<HTMLTemplateElement>('#contacts');
 const successContainer = ensureElement<HTMLTemplateElement>('#success');
 const modalContainer = ensureElement<HTMLDivElement>('#modal-container');
 const headerContainer = ensureElement<HTMLDivElement>('.header__container');
-const wrapper = ensureElement<HTMLDivElement>('.page__wrapper');
 
 const api = new Api(API_URL);
 const events = new EventEmitter();
@@ -52,12 +51,12 @@ const presenterModal = () => {
     if (content) {
       modal.render({content});
       modal.open();
-      wrapper.classList.add('page__wrapper_locked');
+      gallery.locked = true;
     }
   });
   events.on('modal:close', () => {
     modal.close();
-    wrapper.classList.remove('page__wrapper_locked');
+    gallery.locked = false;
   })
 }
 

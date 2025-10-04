@@ -250,11 +250,8 @@ constructor(container: HTMLElement, protected events: IEvents) {
 - `close(): void` —  снятие класса открытой модалки  
 
 render(data?: TModal): HTMLElement {  
-  if (data?.content) {  
-    this.content = data.content;  
-  }  
-  return this.container;  
-} - модифицированный родительский метод, как и у последующих классов представления, рендерит поля класса с переданным в параметры содержимым  
+  return super.render(data);    
+} - модифицированный родительский метод, как и у последующих классов представления, вызывает родительский рендер и обновляет поля класса с переданным в параметры содержимым  
 
 
 Класс `Header` — отвечает за шапку приложения и контролирует состояние счетчика корзины, расширяет класс `Component<THeader>`    
@@ -273,28 +270,28 @@ constructor(container: HTMLElement, protected events: IEvents) {
 Методы класса:   
 
 render(data?: THeader): HTMLElement {  
-  if (data) this.counter = data.counter;  
-  return this.container  
-}  
+  return super.render(data);  
+}   
 
 
-Класс `Gallery` — отвечает за галерею приложения и устанавливает в нее актуальный каталог с карточками, расширяет класс `Component<TGallery>`    
+Класс `Gallery` — отвечает за галерею приложения и устанавливает в нее актуальный каталог с карточками, также контролирует состояние прокрутки страницы, расширяет класс `Component<TGallery>`    
 
 Поля класса:  
-- `protected _catalog: HTMLElement` —  каталог, в который будут вставляться товары          
+- `protected _catalog: HTMLElement` —  каталог, в который будут вставляться товары     
+- `protected _locked: HTMLElement` —  поле с состоянием прокрутки страницы      
 
 constructor(container: HTMLElement) {  
   super(container);  
 }  - в классе не эмитятся никакие события, поэтому передаем в параметры только контейнер с разметкой  
 
 Сеттеры класса:  
-- `set catalog(items: HTMLElement[])` —  устанавливает значение каталога        
+- `set catalog(items: HTMLElement[])` —  устанавливает значение каталога    
+- `set locked(value: boolean)` —  устанавливает значение прокрутки страницы        
 
 Методы класса:   
 
 render(data?: Partial<TGallery>): HTMLElement {  
-  if(data?.catalog) this.catalog = data.catalog  
-  return this.container  
+  return super.render(data);   
 }   
 
 
@@ -318,10 +315,7 @@ constructor(container: HTMLElement, protected events: IEvents) {
 Методы класса:   
 
 render(data?: TBasket): HTMLElement {  
-  if (data?.list) this.list = data.list;  
-  if (data?.total) this.total = data.total;  
-  if (data?.empty) this.empty = data.empty;  
-  return this.container  
+  return super.render(data);    
 }   
 
 
@@ -344,9 +338,7 @@ constructor(container: HTMLElement) {
 Методы класса:   
 
 render(data?: Partial<IProduct>): HTMLElement {  
-  if (data?.title) this.title = data.title;  
-  if (data?.price !== undefined) this.price = data.price;  
-  return this.container;  
+  return super.render(data);   
 }  
 
 
@@ -371,11 +363,8 @@ constructor(container: HTMLElement, actions?: {onClick: () => void}) {
 Методы класса:   
 
 render(data?: Partial<IProduct>): HTMLElement {  
-  super.render(data);  
-  if (data?.category) this.category = data.category;  
-  if (data?.image) this.image = data.image;  
-  return this.container  
-}  - в первую очередь вызывается родительский рендер, с названием и ценой, затем - добавленные категория и изображение   
+  return super.render(data);   
+}    
 
 
 Класс `CardPreview` — отвечает за интерфейс превью карточки и устанавливает значения категории, изображения, описания, наличия в корзине товара, расширяет класс `Card`     
@@ -399,21 +388,13 @@ constructor(container: HTMLElement, actions?: {onClick: () => void}) {
 - `set image(value: string)` —  устанавливает изображение, его путь и альтернативное описание  
 - `set description(value: string)` —  устанавливает описание товара  
 - `set inBasket(value: boolean)` —  устанавливает состояние наличия товара в корзине  
+- `set price(value: number | null)` —  устанавливает цену товара и обрабатывает случай с бесценным товаром    
 
 Методы класса:   
 
 render(data?: Partial<IProduct & {inBasket?: boolean}>): HTMLElement {  
-  super.render(data);  
-  if (data?.category) this.category = data.category;  
-  if (data?.image) this.image = data.image;  
-  if (data?.description) this.description = data.description;  
-  if (data?.inBasket) this.inBasket = data.inBasket;  
-  if (data?.price === null) {  
-    this.setText(this._button, 'Недоступно');  
-    this.setDisable(this._button, true);   
-  }  
-  return this.container  
-}  - в первую очередь вызывается родительский рендер, с названием и ценой, затем - добавленные категория,  изображение, описание и состояние наличия товара в корзине, а также обрабатывается случай с бесценным товаром  
+  return super.render(data);   
+}   
 
 
 
@@ -429,15 +410,13 @@ constructor(container: HTMLElement, protected events: IEvents) {
 
 Сеттеры класса:  
 - `set index(value: number)` —  устанавливает значение индекса товара  
+- `set id(value: number | string)` —  устанавливает значение id товара   
 
 Методы класса:   
 
 render(data?: Partial<IProduct & {index: number}>): HTMLElement {  
-  super.render(data);  
-  if (data?.index) this.index = data.index + 1;  
-  if (data?.id) this._deleteButton.dataset.id = data.id;  
-  return this.container;  
-} - в первую очередь вызывается родительский рендер, с названием и ценой, затем - добавленные индекс и айди товра   
+  return super.render(data);  
+}    
 
 
 Класс `Form` — отвечает за формы оформления заказа. Родительский класс для двух форм, расширяет класс `Component<TOrder>`   
@@ -458,9 +437,7 @@ constructor(container: HTMLElement) {
 Методы класса:   
 
 render(data?: TOrder) {  
-  if(data?.valid !== undefined) this.valid = data.valid;  
-  if(data?.error !== undefined) this.error = data.error;  
-  return this.container  
+  return super.render(data);   
 }  
 
 
@@ -481,11 +458,8 @@ constructor(container: HTMLElement, protected events: IEvents, actions?: {onClic
 Методы класса:   
 
 render(data?: TOrder): HTMLElement {  
-  super.render(data);  
-  if (data?.payment) this.payment = data.payment;  
-  if (data?.address) this.address = data.address;  
-  return this.container  
-} - в первую очередь вызывается родительский рендер, с флагом валидности и сообщением ошибки, затем - добавленные вид оплаты и адрес     
+  return super.render(data);  
+}     
 
 
 Класс `ContactsForm` — отвечает за интерфейс формы с контактными данными и устанавливает их значения, расширяет класс `Form`     
@@ -505,11 +479,8 @@ constructor(container: HTMLElement, protected events: IEvents, actions?: {onClic
 Методы класса:   
 
 render(data?: TOrder): HTMLElement {  
-  super.render(data);  
-  if (data?.email) this.email = data.email;  
-  if (data?.phone) this.phone = data.phone;  
-  return this.container  
-} - в первую очередь вызывается родительский рендер, с флагом валидности и сообщением ошибки, затем - добавленные емэйл и телефон      
+  return super.render(data);   
+}    
 
 
 Класс `Success` — отвечает за интерфейс успешного оформления заказа и устанавливает значение итоговой суммы списания, расширяет класс `Component<{total: number}>`    
@@ -528,8 +499,7 @@ constructor(container: HTMLElement, protected events: IEvents) {
 Методы класса:   
 
 render(data?: {total: number}): HTMLElement {  
-  if (data?.total) this.total = data.total;   
-  return this.container;  
+  return super.render(data);   
 }   
 
 

@@ -16,13 +16,14 @@ export class CardBasket extends Card {
   }
 
   set index(value: number) {
-    this.setText(this._index, String(value));
+    this.setText(this._index, String(value + 1));
+  }
+
+  set id(value: number | string) {
+    this._deleteButton.dataset.id = String(value);
   }
 
   render(data?: Partial<IProduct & {index: number}>): HTMLElement {
-    super.render(data);
-    if (data?.index) this.index = data.index + 1;
-    if (data?.id) this._deleteButton.dataset.id = data.id;
-    return this.container;
+    return super.render(data);
   }
 }

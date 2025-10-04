@@ -22,7 +22,6 @@ export class Header extends Component<THeader> {
   }
 
   render(data?: THeader): HTMLElement {
-    if (data) this.counter = data.counter;
-    return this.container
+    return super.render(data);
   }
 }

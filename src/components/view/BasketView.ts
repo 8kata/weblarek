@@ -39,9 +39,6 @@ export class BasketView extends Component<TBasket> {
   }
 
   render(data?: TBasket): HTMLElement {
-    if (data?.list) this.list = data.list;
-    if (data) this.total = data.total;
-    if (data?.empty) this.empty = data.empty;
-    return this.container
+    return super.render(data);
   }
 }
