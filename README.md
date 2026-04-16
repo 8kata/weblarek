@@ -3,7 +3,7 @@
 🧑‍💻 **Исходный код:** [Репозиторий проекта web-larek](https://github.com/8kata/weblarek.git)  
 🌍 **Опубликованный проект:** [web-larek на github pages](https://8kata.github.io/weblarek/)  
 
-Стек: HTML, SCSS, TS, Webpack  
+Стек: HTML, SCSS, TS, Vite  
 Применяемый паттерн проектирования — MVP + событийно-ориентированный подход  
 
 Структура проекта:  
